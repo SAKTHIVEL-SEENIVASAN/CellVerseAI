@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CellVerse AI - Stem Cell Research Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(rgba(0, 15, 35, 0.85), rgba(0, 15, 35, 0.95)), url('https://i.imgur.com/v0TaT2a.gif');
+            background-size: cover;
+            background-attachment: fixed;
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            margin-bottom: 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #00b4db, #0083b0);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            border: 2px solid #fff;
+            box-shadow: 0 0 20px rgba(0, 180, 219, 0.7);
+        }
+        
+        .logo-text {
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(to right, #00b4db, #00e676);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 10px rgba(0, 230, 118, 0.3);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+        
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 15px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        nav a:hover, nav a.active {
+            background: rgba(0, 230, 118, 0.2);
+            color: #00e676;
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 60px 0;
+            margin-bottom: 40px;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, #00b4db, #00e676);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            color: #ccd6f6;
+            line-height: 1.6;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: linear-gradient(to right, #00b4db, #00e676);
+            color: #000;
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            box-shadow: 0 5px 15px rgba(0, 230, 118, 0.4);
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 230, 118, 0.6);
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+        
+        .feature-card {
+            background: rgba(10, 25, 47, 0.8);
+            border-radius: 15px;
+            padding: 25px;
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(0, 230, 118, 0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0, 230, 118, 0.3);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #00e676;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #00b4db;
+        }
+        
+        .feature-card p {
+            color: #ccd6f6;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .demo-section {
+            background: rgba(10, 25, 47, 0.8);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 50px;
+            border: 1px solid rgba(0, 230, 118, 0.1);
+        }
+        
+        .demo-section h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #00b4db;
+            font-size: 2rem;
+        }
+        
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .tab {
+            padding: 12px 25px;
+            background: rgba(0, 180, 219, 0.2);
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .tab.active {
+            background: linear-gradient(to right, #00b4db, #00e676);
+            color: #000;
+            font-weight: 600;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #00e676;
+        }
+        
+        .input-group input, .input-group select, .input-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(0, 230, 118, 0.3);
+            border-radius: 8px;
+            color: #fff;
+            font-size: 1rem;
+        }
+        
+        .result-box {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            border: 1px solid rgba(0, 230, 118, 0.2);
+        }
+        
+        .result-box h4 {
+            color: #00b4db;
+            margin-bottom: 10px;
+        }
+        
+        .result-content {
+            color: #ccd6f6;
+            line-height: 1.6;
+        }
+        
+        .chart-container {
+            height: 300px;
+            margin-top: 20px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            color: #ccd6f6;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+            }
+            
+            nav ul {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo-container">
+                <div class="logo">CV</div>
+                <div class="logo-text">CellVerse AI</div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#" class="active">Home</a></li>
+                    <li><a href="#">Features</a></li>
+                    <li><a href="#">Demo</a></li>
+                    <li><a href="#">About</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <section class="hero">
+            <h1>Revolutionizing Stem Cell Research with AI</h1>
+            <p>CellVerse AI is an advanced platform that accelerates stem cell research through artificial intelligence, providing researchers with powerful tools for protocol generation, cell aging analysis, and donor-recipient matching.</p>
+            <a href="#demo" class="btn">Try Demo</a>
+        </section>
+
+        <section class="features">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-flask"></i>
+                </div>
+                <h3>Recipe Generator</h3>
+                <p>AI-powered protocol generation for stem cell differentiation. Input your desired cell type and get step-by-step instructions based on the latest research.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <h3>Aging Clock</h3>
+                <p>Predict the biological age of stem cells using gene expression data. Our AI model analyzes multiple biomarkers to determine cell quality and viability.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-dna"></i>
+                </div>
+                <h3>Donor Match Predictor</h3>
+                <p>Advanced compatibility analysis between donor and recipient samples to minimize rejection risks and improve transplantation success rates.</p>
+            </div>
+        </section>
+
+        <section id="demo" class="demo-section">
+            <h2>Interactive Demo</h2>
+            <div class="tabs">
+                <div class="tab active" onclick="switchTab(0)">Recipe Generator</div>
+                <div class="tab" onclick="switchTab(1)">Aging Clock</div>
+                <div class="tab" onclick="switchTab(2)">Donor Match</div>
+            </div>
+
+            <div class="tab-content active">
+                <div class="input-group">
+                    <label for="cellType">Desired Cell Type</label>
+                    <select id="cellType">
+                        <option value="neuron">Neuron</option>
+                        <option value="cardiac">Cardiac Cell</option>
+                        <option value="retinal">Retinal Cell</option>
+                        <option value="hepatic">Hepatocyte (Liver Cell)</option>
+                    </select>
+                </div>
+                <button class="btn" onclick="generateRecipe()">Generate Protocol</button>
+                <div class="result-box">
+                    <h4>Generated Protocol</h4>
+                    <div class="result-content" id="recipeResult">Protocol will appear here after generation.</div>
+                </div>
+            </div>
+
+            <div class="tab-content">
+                <div class="input-group">
+                    <label for="geneData">Gene Expression Data (CSV format)</label>
+                    <textarea id="geneData" rows="5">OCT4, 0.85
+NANOG, 0.92
+SOX2, 0.78
+LIN28A, 0.65
+TP53, 0.42</textarea>
+                </div>
+                <button class="btn" onclick="analyzeAging()">Analyze Cell Age</button>
+                <div class="result-box">
+                    <h4>Aging Analysis Result</h4>
+                    <div class="result-content" id="agingResult">Analysis results will appear here.</div>
+                    <div class="chart-container">
+                        <canvas id="agingChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content">
+                <div class="input-group">
+                    <label for="donorDna">Donor DNA Sequence</label>
+                    <input type="text" id="donorDna" value="AGCTAGCTAG">
+                </div>
+                <div class="input-group">
+                    <label for="recipientDna">Recipient DNA Sequence</label>
+                    <input type="text" id="recipientDna" value="AGCTAGCTAA">
+                </div>
+                <button class="btn" onclick="checkMatch()">Check Compatibility</button>
+                <div class="result-box">
+                    <h4>Compatibility Result</h4>
+                    <div class="result-content" id="matchResult">Compatibility score will appear here.</div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>CellVerse AI - Stem Cell Research Platform</p>
+            <p>© 2023 CellVerse AI. All rights reserved. This is a demonstration for hackathon purposes.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Tab switching functionality
+        function switchTab(tabIndex) {
+            document.querySelectorAll('.tab').forEach((tab, index) => {
+                if (index === tabIndex) {
+                    tab.classList.add('active');
+                } else {
+                    tab.classList.remove('active');
+                }
+            });
+            
+            document.querySelectorAll('.tab-content').forEach((content, index) => {
+                if (index === tabIndex) {
+                    content.classList.add('active');
+                } else {
+                    content.classList.remove('active');
+                }
+            });
+        }
+
+        // Recipe Generator
+        function generateRecipe() {
+            const cellType = document.getElementById('cellType').value;
+            const recipes = {
+                neuron: [
+                    "Day 0: Plate neural progenitor cells on poly-ornithine coated plates.",
+                    "Day 1: Add BDNF (50ng/ml) and ascorbic acid (200uM) to medium.",
+                    "Day 3: Replace 50% of medium with fresh differentiation cocktail.",
+                    "Day 7: Cells should express MAP2 and beta-tubulin III. Passage if necessary."
+                ],
+                cardiac: [
+                    "Day 0: Start with iPSCs at 80% confluency.",
+                    "Day 1: Add Activin A (100ng/ml) for primitive streak induction.",
+                    "Day 3: Switch to BMP4 (50ng/ml) and FGF2 (20ng/ml) for cardiac mesoderm specification.",
+                    "Day 5: Begin serum-free differentiation. Monitor for spontaneous beating.",
+                    "Day 10: >30% of cells should be cTnT positive."
+                ],
+                retinal: [
+                    "Day 0: Aggregate pluripotent stem cells into embryoid bodies.",
+                    "Day 3: Add BMP4 (10ng/ml) and suppress FGF signaling.",
+                    "Day 6: Plate aggregates on Matrigel. Add Retinoic Acid (1uM).",
+                    "Day 12: Isolate RX+/PAX6+ retinal progenitor cells.",
+                    "Day 20: Mature cells should express Rhodopsin and Recoverin."
+                ],
+                hepatic: [
+                    "Day 0: Start with definitive endoderm cells.",
+                    "Day 1: Add FGF2 (10ng/ml) and BMP4 (5ng/ml) for hepatic specification.",
+                    "Day 5: Add HGF (20ng/ml) and Oncostatin M (20ng/ml) for maturation.",
+                    "Day 10: Cells should express Albumin and CYP3A4. Functional assays recommended."
+                ]
+            };
+            
+            const resultDiv = document.getElementById('recipeResult');
+            resultDiv.innerHTML = `<h4>Protocol for ${cellType} differentiation:</h4><ol>`;
+            recipes[cellType].forEach(step => {
+                resultDiv.innerHTML += `<li>${step}</li>`;
+            });
+            resultDiv.innerHTML += '</ol>';
+        }
+
+        // Aging Clock
+        function analyzeAging() {
+            const resultDiv = document.getElementById('agingResult');
+            resultDiv.innerHTML = `
+                <p>Biological Age: <strong>32.4 years</strong> (Chronological Age: 41 years)</p>
+                <p>Cell Quality: <strong>Excellent</strong></p>
+                <p>Pluripotency Score: 0.87/1.0</p>
+                <p>Recommendation: Suitable for clinical applications</p>
+            `;
+            
+            // Draw chart
+            const ctx = document.getElementById('agingChart').getContext('2d');
+            if (window.agingChartInstance) {
+                window.agingChartInstance.destroy();
+            }
+            window.agingChartInstance = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['OCT4', 'NANOG', 'SOX2', 'LIN28A', 'TP53', 'CDKN2A'],
+                    datasets: [{
+                        label: 'Expression Level',
+                        data: [0.85, 0.92, 0.78, 0.65, 0.42, 0.38],
+                        backgroundColor: 'rgba(0, 230, 118, 0.2)',
+                        borderColor: 'rgba(0, 230, 118, 1)',
+                        pointBackgroundColor: 'rgba(0, 230, 118, 1)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgba(0, 230, 118, 1)'
+                    }]
+                },
+                options: {
+                    scales: {
+                        r: {
+                            angleLines: {
+                                display: true
+                            },
+                            suggestedMin: 0,
+                            suggestedMax: 1
+                        }
+                    }
+                }
+            });
+        }
+
+        // Donor Match
+        function checkMatch() {
+            const donorDna = document.getElementById('donorDna').value;
+            const recipientDna = document.getElementById('recipientDna').value;
+            
+            // Simple similarity algorithm for demo
+            let matchCount = 0;
+            const length = Math.min(donorDna.length, recipientDna.length);
+            
+            for (let i = 0; i < length; i++) {
+                if (donorDna[i] === recipientDna[i]) {
+                    matchCount++;
+                }
+            }
+            
+            const score = Math.round((matchCount / length) * 100);
+            let message = '';
+            
+            if (score >= 90) {
+                message = '<span style="color: #00e676">Excellent match! Low risk of rejection.</span>';
+            } else if (score >= 75) {
+                message = '<span style="color: #ffeb3b">Good match. Moderate immunosuppression may be needed.</span>';
+            } else {
+                message = '<span style="color: #ff5252">Poor match. Consider alternative donors.</span>';
+            }
+            
+            document.getElementById('matchResult').innerHTML = `
+                <p>Compatibility Score: <strong>${score}%</strong></p>
+                <p>${message}</p>
+                <p>Donor: ${donorDna}</p>
+                <p>Recipient: ${recipientDna}</p>
+            `;
+        }
+
+        // Initialize with recipe generation
+        window.onload = function() {
+            generateRecipe();
+        };
+    </script>
+</body>
+</html>
