@@ -3,10 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CellVerse AI - Stem Cell Research Platform</title>
+    <title>CellVerse AI | AI-Powered Stem Cell Research</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
+        :root {
+            --primary: #00b4db;
+            --secondary: #00e676;
+            --dark: #0a192f;
+            --light: #ccd6f6;
+            --accent: #ff5252;
+            --transition: all 0.5s cubic-bezier(0.645, 0.045, 0.355, 1);
+        }
+        
         * {
             margin: 0;
             padding: 0;
@@ -15,12 +24,13 @@
         }
         
         body {
-            background: linear-gradient(rgba(0, 15, 35, 0.85), rgba(0, 15, 35, 0.95)), url('https://i.imgur.com/v0TaT2a.gif');
+            background: linear-gradient(rgba(10, 25, 47, 0.85), rgba(10, 25, 47, 0.95)), url('https://i.imgur.com/v0TaT2a.gif');
             background-size: cover;
             background-attachment: fixed;
-            color: #fff;
+            color: var(--light);
             min-height: 100vh;
             padding: 20px;
+            overflow-x: hidden;
         }
         
         .container {
@@ -28,13 +38,15 @@
             margin: 0 auto;
         }
         
+        /* Header Styles */
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 20px 0;
             margin-bottom: 30px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            animation: fadeInDown 1s ease;
         }
         
         .logo-container {
@@ -46,7 +58,7 @@
         .logo {
             width: 70px;
             height: 70px;
-            background: linear-gradient(135deg, #00b4db, #0083b0);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -54,12 +66,17 @@
             font-size: 28px;
             border: 2px solid #fff;
             box-shadow: 0 0 20px rgba(0, 180, 219, 0.7);
+            transition: var(--transition);
+        }
+        
+        .logo:hover {
+            transform: rotate(360deg);
         }
         
         .logo-text {
             font-size: 28px;
             font-weight: 700;
-            background: linear-gradient(to right, #00b4db, #00e676);
+            background: linear-gradient(to right, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-shadow: 0 0 10px rgba(0, 230, 118, 0.3);
@@ -72,61 +89,83 @@
         }
         
         nav a {
-            color: #fff;
+            color: var(--light);
             text-decoration: none;
             font-weight: 500;
             padding: 8px 15px;
             border-radius: 20px;
-            transition: all 0.3s ease;
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        nav a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--secondary);
+            transition: var(--transition);
+        }
+        
+        nav a:hover:after, nav a.active:after {
+            width: 100%;
         }
         
         nav a:hover, nav a.active {
-            background: rgba(0, 230, 118, 0.2);
-            color: #00e676;
+            color: var(--secondary);
         }
         
+        /* Hero Section */
         .hero {
             text-align: center;
-            padding: 60px 0;
+            padding: 80px 0;
             margin-bottom: 40px;
+            animation: fadeIn 1.5s ease;
         }
         
         .hero h1 {
             font-size: 3.5rem;
             margin-bottom: 20px;
-            background: linear-gradient(to right, #00b4db, #00e676);
+            background: linear-gradient(to right, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            animation: slideInFromTop 1s ease;
         }
         
         .hero p {
             font-size: 1.2rem;
             max-width: 800px;
             margin: 0 auto 30px;
-            color: #ccd6f6;
+            color: var(--light);
             line-height: 1.6;
+            animation: slideInFromBottom 1s ease;
         }
         
         .btn {
             display: inline-block;
             padding: 12px 30px;
-            background: linear-gradient(to right, #00b4db, #00e676);
+            background: linear-gradient(to right, var(--primary), var(--secondary));
             color: #000;
             border: none;
             border-radius: 30px;
             font-weight: 600;
             font-size: 1rem;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: var(--transition);
             text-decoration: none;
             box-shadow: 0 5px 15px rgba(0, 230, 118, 0.4);
+            animation: pulse 2s infinite;
         }
         
         .btn:hover {
             transform: translateY(-3px);
             box-shadow: 0 8px 20px rgba(0, 230, 118, 0.6);
+            animation: none;
         }
         
+        /* Features Section */
         .features {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -138,9 +177,10 @@
             background: rgba(10, 25, 47, 0.8);
             border-radius: 15px;
             padding: 25px;
-            transition: transform 0.3s ease;
+            transition: var(--transition);
             border: 1px solid rgba(0, 230, 118, 0.1);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 1s ease;
         }
         
         .feature-card:hover {
@@ -151,33 +191,40 @@
         .feature-icon {
             font-size: 2.5rem;
             margin-bottom: 20px;
-            color: #00e676;
+            color: var(--secondary);
+            transition: var(--transition);
+        }
+        
+        .feature-card:hover .feature-icon {
+            transform: scale(1.2);
         }
         
         .feature-card h3 {
             font-size: 1.5rem;
             margin-bottom: 15px;
-            color: #00b4db;
+            color: var(--primary);
         }
         
         .feature-card p {
-            color: #ccd6f6;
+            color: var(--light);
             line-height: 1.6;
             margin-bottom: 20px;
         }
         
+        /* Demo Section */
         .demo-section {
             background: rgba(10, 25, 47, 0.8);
             border-radius: 15px;
             padding: 30px;
             margin-bottom: 50px;
             border: 1px solid rgba(0, 230, 118, 0.1);
+            animation: fadeInUp 1s ease;
         }
         
         .demo-section h2 {
             text-align: center;
             margin-bottom: 30px;
-            color: #00b4db;
+            color: var(--primary);
             font-size: 2rem;
         }
         
@@ -193,17 +240,18 @@
             background: rgba(0, 180, 219, 0.2);
             border-radius: 30px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: var(--transition);
         }
         
         .tab.active {
-            background: linear-gradient(to right, #00b4db, #00e676);
+            background: linear-gradient(to right, var(--primary), var(--secondary));
             color: #000;
             font-weight: 600;
         }
         
         .tab-content {
             display: none;
+            animation: fadeIn 0.5s ease;
         }
         
         .tab-content.active {
@@ -217,7 +265,7 @@
         .input-group label {
             display: block;
             margin-bottom: 8px;
-            color: #00e676;
+            color: var(--secondary);
         }
         
         .input-group input, .input-group select, .input-group textarea {
@@ -228,6 +276,13 @@
             border-radius: 8px;
             color: #fff;
             font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        .input-group input:focus, .input-group select:focus, .input-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 10px rgba(0, 180, 219, 0.5);
         }
         
         .result-box {
@@ -236,15 +291,16 @@
             padding: 20px;
             margin-top: 20px;
             border: 1px solid rgba(0, 230, 118, 0.2);
+            animation: fadeIn 0.5s ease;
         }
         
         .result-box h4 {
-            color: #00b4db;
+            color: var(--primary);
             margin-bottom: 10px;
         }
         
         .result-content {
-            color: #ccd6f6;
+            color: var(--light);
             line-height: 1.6;
         }
         
@@ -253,13 +309,72 @@
             margin-top: 20px;
         }
         
+        /* Footer */
         footer {
             text-align: center;
             padding: 30px 0;
-            color: #ccd6f6;
+            color: var(--light);
             border-top: 1px solid rgba(255, 255, 255, 0.1);
+            animation: fadeInUp 1s ease;
         }
         
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInDown {
+            from { 
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideInFromTop {
+            from { 
+                opacity: 0;
+                transform: translateY(-60px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideInFromBottom {
+            from { 
+                opacity: 0;
+                transform: translateY(60px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        /* Responsive Design */
         @media (max-width: 768px) {
             header {
                 flex-direction: column;
@@ -292,9 +407,9 @@
             <nav>
                 <ul>
                     <li><a href="#" class="active">Home</a></li>
-                    <li><a href="#">Features</a></li>
-                    <li><a href="#">Demo</a></li>
-                    <li><a href="#">About</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#demo">Demo</a></li>
+                    <li><a href="#about">About</a></li>
                 </ul>
             </nav>
         </header>
@@ -305,13 +420,13 @@
             <a href="#demo" class="btn">Try Demo</a>
         </section>
 
-        <section class="features">
+        <section id="features" class="features">
             <div class="feature-card">
                 <div class="feature-icon">
                     <i class="fas fa-flask"></i>
                 </div>
-                <h3>Recipe Generator</h3>
-                <p>AI-powered protocol generation for stem cell differentiation. Input your desired cell type and get step-by-step instructions based on the latest research.</p>
+                <h3>Treatment Predictor</h3>
+                <p>Predict patient outcomes and treatment success rates using our advanced AI algorithms that analyze clinical data and biomarkers.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">
@@ -327,30 +442,46 @@
                 <h3>Donor Match Predictor</h3>
                 <p>Advanced compatibility analysis between donor and recipient samples to minimize rejection risks and improve transplantation success rates.</p>
             </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-microscope"></i>
+                </div>
+                <h3>Fate Predictor</h3>
+                <p>Predict what a stem cell will differentiate into before lab experiments, reducing costs and accelerating research with computer vision AI.</p>
+            </div>
         </section>
 
         <section id="demo" class="demo-section">
             <h2>Interactive Demo</h2>
             <div class="tabs">
-                <div class="tab active" onclick="switchTab(0)">Recipe Generator</div>
+                <div class="tab active" onclick="switchTab(0)">Treatment Predictor</div>
                 <div class="tab" onclick="switchTab(1)">Aging Clock</div>
                 <div class="tab" onclick="switchTab(2)">Donor Match</div>
+                <div class="tab" onclick="switchTab(3)">Fate Predictor</div>
             </div>
 
             <div class="tab-content active">
                 <div class="input-group">
-                    <label for="cellType">Desired Cell Type</label>
-                    <select id="cellType">
-                        <option value="neuron">Neuron</option>
-                        <option value="cardiac">Cardiac Cell</option>
-                        <option value="retinal">Retinal Cell</option>
-                        <option value="hepatic">Hepatocyte (Liver Cell)</option>
+                    <label for="patientAge">Patient Age</label>
+                    <input type="number" id="patientAge" value="45">
+                </div>
+                <div class="input-group">
+                    <label for="condition">Medical Condition</label>
+                    <select id="condition">
+                        <option value="cardiac">Cardiac Disease</option>
+                        <option value="neuro">Neurodegenerative</option>
+                        <option value="diabetes">Diabetes</option>
+                        <option value="blood">Blood Disorder</option>
                     </select>
                 </div>
-                <button class="btn" onclick="generateRecipe()">Generate Protocol</button>
+                <div class="input-group">
+                    <label for="biomarkers">Biomarker Data (comma separated)</label>
+                    <input type="text" id="biomarkers" value="0.85, 0.92, 0.78, 0.65">
+                </div>
+                <button class="btn" onclick="predictTreatment()">Predict Outcome</button>
                 <div class="result-box">
-                    <h4>Generated Protocol</h4>
-                    <div class="result-content" id="recipeResult">Protocol will appear here after generation.</div>
+                    <h4>Treatment Prediction Result</h4>
+                    <div class="result-content" id="treatmentResult">Results will appear here after prediction.</div>
                 </div>
             </div>
 
@@ -382,11 +513,52 @@ TP53, 0.42</textarea>
                     <label for="recipientDna">Recipient DNA Sequence</label>
                     <input type="text" id="recipientDna" value="AGCTAGCTAA">
                 </div>
+                <div class="input-group">
+                    <label for="bloodType">Blood Type Compatibility</label>
+                    <select id="bloodType">
+                        <option value="match">Match</option>
+                        <option value="partial">Partial Match</option>
+                        <option value="mismatch">Mismatch</option>
+                    </select>
+                </div>
                 <button class="btn" onclick="checkMatch()">Check Compatibility</button>
                 <div class="result-box">
                     <h4>Compatibility Result</h4>
                     <div class="result-content" id="matchResult">Compatibility score will appear here.</div>
                 </div>
+            </div>
+
+            <div class="tab-content">
+                <div class="input-group">
+                    <label for="cellImage">Stem Cell Image (Simulated)</label>
+                    <select id="cellImage">
+                        <option value="neural">Neural Progenitor Cells</option>
+                        <option value="cardiac">Cardiac Progenitors</option>
+                        <option value="hematopoietic">Hematopoietic Stem Cells</option>
+                        <option value="mesenchymal">Mesenchymal Stem Cells</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="markers">Cell Markers (comma separated)</label>
+                    <input type="text" id="markers" value="CD34, CD45, CD90">
+                </div>
+                <button class="btn" onclick="predictFate()">Predict Cell Fate</button>
+                <div class="result-box">
+                    <h4>Fate Prediction Result</h4>
+                    <div class="result-content" id="fateResult">Prediction results will appear here.</div>
+                    <div class="chart-container">
+                        <canvas id="fateChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="demo-section">
+            <h2>About CellVerse AI</h2>
+            <div class="result-content">
+                <p>CellVerse AI is a cutting-edge platform designed to accelerate stem cell research and therapy development through the power of artificial intelligence. Our mission is to reduce the time, cost, and uncertainty associated with stem cell research by providing researchers with powerful predictive tools.</p>
+                <p>Founded in 2023, our team consists of experts in AI, bioinformatics, and stem cell biology working together to create the future of regenerative medicine.</p>
+                <p>For more information or partnership inquiries, please contact us at <strong>info@cellverse-ai.com</strong></p>
             </div>
         </section>
 
@@ -416,44 +588,39 @@ TP53, 0.42</textarea>
             });
         }
 
-        // Recipe Generator
-        function generateRecipe() {
-            const cellType = document.getElementById('cellType').value;
-            const recipes = {
-                neuron: [
-                    "Day 0: Plate neural progenitor cells on poly-ornithine coated plates.",
-                    "Day 1: Add BDNF (50ng/ml) and ascorbic acid (200uM) to medium.",
-                    "Day 3: Replace 50% of medium with fresh differentiation cocktail.",
-                    "Day 7: Cells should express MAP2 and beta-tubulin III. Passage if necessary."
-                ],
-                cardiac: [
-                    "Day 0: Start with iPSCs at 80% confluency.",
-                    "Day 1: Add Activin A (100ng/ml) for primitive streak induction.",
-                    "Day 3: Switch to BMP4 (50ng/ml) and FGF2 (20ng/ml) for cardiac mesoderm specification.",
-                    "Day 5: Begin serum-free differentiation. Monitor for spontaneous beating.",
-                    "Day 10: >30% of cells should be cTnT positive."
-                ],
-                retinal: [
-                    "Day 0: Aggregate pluripotent stem cells into embryoid bodies.",
-                    "Day 3: Add BMP4 (10ng/ml) and suppress FGF signaling.",
-                    "Day 6: Plate aggregates on Matrigel. Add Retinoic Acid (1uM).",
-                    "Day 12: Isolate RX+/PAX6+ retinal progenitor cells.",
-                    "Day 20: Mature cells should express Rhodopsin and Recoverin."
-                ],
-                hepatic: [
-                    "Day 0: Start with definitive endoderm cells.",
-                    "Day 1: Add FGF2 (10ng/ml) and BMP4 (5ng/ml) for hepatic specification.",
-                    "Day 5: Add HGF (20ng/ml) and Oncostatin M (20ng/ml) for maturation.",
-                    "Day 10: Cells should express Albumin and CYP3A4. Functional assays recommended."
-                ]
+        // Treatment Predictor
+        function predictTreatment() {
+            const age = document.getElementById('patientAge').value;
+            const condition = document.getElementById('condition').value;
+            
+            let baseScore = 85;
+            if (age > 60) baseScore -= 10;
+            if (age > 70) baseScore -= 10;
+            
+            const conditions = {
+                'cardiac': { modifier: -5, name: 'Cardiac Disease' },
+                'neuro': { modifier: 0, name: 'Neurodegenerative Disease' },
+                'diabetes': { modifier: -3, name: 'Diabetes' },
+                'blood': { modifier: 5, name: 'Blood Disorder' }
             };
             
-            const resultDiv = document.getElementById('recipeResult');
-            resultDiv.innerHTML = `<h4>Protocol for ${cellType} differentiation:</h4><ol>`;
-            recipes[cellType].forEach(step => {
-                resultDiv.innerHTML += `<li>${step}</li>`;
-            });
-            resultDiv.innerHTML += '</ol>';
+            const score = baseScore + conditions[condition].modifier;
+            let recommendation = '';
+            
+            if (score >= 85) {
+                recommendation = '<span style="color: #00e676">Excellent candidate for treatment. High probability of success.</span>';
+            } else if (score >= 70) {
+                recommendation = '<span style="color: #ffeb3b">Good candidate. Moderate probability of success with close monitoring.</span>';
+            } else {
+                recommendation = '<span style="color: #ff5252">Higher risk candidate. Consider alternative treatments or additional preparatory therapy.</span>';
+            }
+            
+            document.getElementById('treatmentResult').innerHTML = `
+                <p>Patient Age: <strong>${age}</strong></p>
+                <p>Condition: <strong>${conditions[condition].name}</strong></p>
+                <p>Treatment Success Score: <strong>${score}%</strong></p>
+                <p>${recommendation}</p>
+            `;
         }
 
         // Aging Clock
@@ -504,6 +671,7 @@ TP53, 0.42</textarea>
         function checkMatch() {
             const donorDna = document.getElementById('donorDna').value;
             const recipientDna = document.getElementById('recipientDna').value;
+            const bloodType = document.getElementById('bloodType').value;
             
             // Simple similarity algorithm for demo
             let matchCount = 0;
@@ -515,7 +683,14 @@ TP53, 0.42</textarea>
                 }
             }
             
-            const score = Math.round((matchCount / length) * 100);
+            let score = Math.round((matchCount / length) * 100);
+            
+            // Adjust score based on blood type
+            if (bloodType === 'partial') score -= 10;
+            if (bloodType === 'mismatch') score -= 30;
+            
+            if (score < 0) score = 0;
+            
             let message = '';
             
             if (score >= 90) {
@@ -531,12 +706,78 @@ TP53, 0.42</textarea>
                 <p>${message}</p>
                 <p>Donor: ${donorDna}</p>
                 <p>Recipient: ${recipientDna}</p>
+                <p>Blood Type: ${bloodType}</p>
             `;
         }
 
-        // Initialize with recipe generation
+        // Fate Predictor
+        function predictFate() {
+            const cellType = document.getElementById('cellImage').value;
+            const markers = document.getElementById('markers').value;
+            
+            const cellTypes = {
+                'neural': { name: 'Neural Cells', probability: 92, color: '#00b4db' },
+                'cardiac': { name: 'Cardiac Cells', probability: 85, color: '#ff5252' },
+                'hematopoietic': { name: 'Blood Cells', probability: 88, color: '#ffeb3b' },
+                'mesenchymal': { name: 'Connective Tissue', probability: 95, color: '#00e676' }
+            };
+            
+            const selected = cellTypes[cellType];
+            
+            document.getElementById('fateResult').innerHTML = `
+                <p>Predicted Cell Fate: <strong>${selected.name}</strong></p>
+                <p>Confidence: <strong>${selected.probability}%</strong></p>
+                <p>Markers Analyzed: <strong>${markers}</strong></p>
+            `;
+            
+            // Draw chart
+            const ctx = document.getElementById('fateChart').getContext('2d');
+            if (window.fateChartInstance) {
+                window.fateChartInstance.destroy();
+            }
+            window.fateChartInstance = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Probability', 'Uncertainty'],
+                    datasets: [{
+                        data: [selected.probability, 100-selected.probability],
+                        backgroundColor: [selected.color, 'rgba(100, 100, 100, 0.3)'],
+                        borderColor: ['#fff', '#fff'],
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        },
+                        title: {
+                            display: true,
+                            text: 'Prediction Confidence'
+                        }
+                    }
+                }
+            });
+        }
+
+        // Initialize with first tab
         window.onload = function() {
-            generateRecipe();
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('nav a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 20,
+                        behavior: 'smooth'
+                    });
+                });
+            });
+            
+            // Initialize first tab
+            predictTreatment();
         };
     </script>
 </body>
